@@ -1,0 +1,25 @@
+{% extends 'base.html' %} 
+{% load urlify %}
+{% block content %} {{ request.build_absolute_uri }}
+<div class="col-sm-6 col-sm-offset-3">
+	<div>
+		{{ instance.user }} - {{ instance.user.get_full_name }}
+	</div>
+	<div>{{ instance.title }} - {% if instance.draft %}
+	<span style="color:red">Draft</span>
+	{% endif %}</div>
+	<div>{{ instance.content }}</div>
+	{% if instance.image %}
+    <img src="{{ instance.image.url }}" alt="" class="img-responsive"> {% endif %}
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
+Share on Facebook
+</a>
+	<a href="https://www.linkedin.com/shareArticle?mini=true&url=http://swiftforentrepreneurs.com/&title=Be%20first%20%7C%20Join%20Swift%20for%20Entrepreneurs&summary=Swift%20for%20Entrepreneurs%20is%20a%20project-based%20programming%20course%20for%20non-technical%20founders.%20We'll%20learn%20how%20to%20build%20iOS%20apps%20from%20scratch%20using%20Apple's%20new%20programming%20language:%20Swift.%20Be%20first%20and%20learn%20with%20me!&source={{ request.build_absolute_uri }}">
+Share on Linkedin
+</a>
+<a href="https://twitter.com/home?status={{ instance.content|urlify }}%20http://codingforentrepreneurs.com/">
+Share on Twitter
+</a>
+<div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
+</div>
+{% endblock %}
