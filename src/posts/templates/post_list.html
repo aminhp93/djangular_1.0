@@ -1,20 +1,28 @@
 {% extends 'base.html' %} {% block content %}
 <div class="col-sm-8 col-sm-offset-2">
     <h1>List Posts</h1>
-    <form action="">
-        <input type="text" placeholder="Search Post" name="q" value="{{ request.GET.q }}">
-        <input type="submit" value="Search">
+    <form action="" class="row">
+        <div class="col-sm-6">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search Post" name="q" value="{{ request.GET.q }}">
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+            </span>
+            </div>
+        </div>
     </form>
+    <br>
     <div class="row">
         {% for object in object_list %}
         <div class="col-sm-6">
-            {% if object.image %}
-            <img src="{{ object.image.url }}" alt="" class="img-responsive">
-            {% endif %}
             <div class="thumbnail">
+                {% if object.image %}
+                <a href="{{ object.get_absolute_url }}"><img src="{{ object.image.url }}" alt="" class="img-responsive"></a>
+                {% endif %}
                 <div class="caption">
                     <h3><a href="{{ object.get_absolute_url }}">{{ object.title }} - {{ object.publish|timesince }}</a></h3>
-                    <p>{{ object.id|linebreaks|truncatechars:120 }} {{ object }}</p>
+                    <p>{{ object.id|linebreaks|truncatechars:120 }}</p>
+                    <div class="post-detail-item"> {{ object.get_markdown|truncatechars_html:9 }}</div>
                     <p><a href="{{ object.get_absolute_url }}" class="btn btn-primary" role="button">View</a></p>
                 </div>
             </div>

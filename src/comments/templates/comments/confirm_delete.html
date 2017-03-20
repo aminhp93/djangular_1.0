@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% load urlify %} {% block content %} {{ request.build_absolute_uri }}
+<div class="col-sm-6 col-sm-offset-3">
+    <form action="" method="POST">
+        {% csrf_token %} {{ form|crispy }}
+        <p>Are you sure to delete {{ object.content }}?</p>
+        <input type="submit" value="Delete" class="btn btn-danger">
+        <a href="{{ object.get_absolute_url }}" class="btn btn-default">Cancel</a>
+    </form>
+</div>
+{% endblock %}

@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% block head_extra %}
+    {% endblock %}
 </head>
 
 <body>
@@ -25,11 +29,70 @@
     }(document, 'script', 'facebook-jssdk'));
     </script>
     {% include 'message_display.html' %}
+
     <div class="container">
+        <div class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><a href="{% url 'posts:list' %}">Posts</a></li>
+            {% block post_detail_link %}
+            {% endblock %}
+            {% if not request.user.is_authenticated %}
+            <li class="pull-right"><a href="{% url 'login' %}">Login</a></li>
+            <li class="pull-right"><a href="{% url 'register' %}">Register</a></li>
+            {% else %}
+            <li class="pull-right"><a href="{% url 'logout' %}">Logout</a></li>
+            {% endif %}
+            
+        </div>
         {% block content %} {% endblock %}
     </div>
+    <script   src="https://code.jquery.com/jquery-3.2.0.min.js"   integrity="sha256-JAW99MJVpJBGcbzEuXk4Az05s/XyDdBomFqNlM3ic+I="   crossorigin="anonymous"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $(".content-markdown").each(function(){
+                var content = $(this).text();
+                var markedContent = marked(content);
+                $(this).html(markedContent);
+            })
+
+            $(".post-detail-item img").each(function(){
+                $(this).addClass("img-responsive");
+            })
+
+            var titleItem = $("#id_title");
+            $("#preview-title").text(titleItem.val());
+            
+            var contentInput = $("#id_content");
+
+            function setContent(value){
+                var markedContent = marked(value);
+                $("#preview-content").html(markedContent);
+                $("#preview-content img").each(function(){
+                    $(this).addClass("img-reponsive");
+                })
+            }
+
+            setContent(contentInput.val());
+
+            contentInput.keyup(function(){
+                var newContent = $(this).val();
+                setContent(newContent);
+            })
+
+            $(".comment-reply-btn").click(function(e){
+                e.preventDefault();
+                $(this).parent().next(".comment-reply").fadeToggle();
+            })
+            
+
+            
+        })
+    </script>
 </body>
 
 </html>
