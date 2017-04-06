@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "crispy_forms",
     "markdown_deux",
     "pagedown",
+    'rest_framework',
 
     # app
     'comments',
@@ -139,3 +140,39 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_root")
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media_root')
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
+    # 'DEFAULT_PARSER_CLASSES': (
+    #     'rest_framework.parsers.JSONParser',
+    # ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    )
+}
+
+
+"""
+curl -X POST -d "username=amin&password=Miamikki521" http://127.0.0.1:8000/api/auth/token/
+
+curl -X POST -H "Content-Type: application/json" -d '{"username":"amin","password":"Miamikki521"}' http://localhost:8000/api/auth/token/
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1pbmhAZ21haWwuY29tIiwidXNlcm5hbWUiOiJhbWluIiwidXNlcl9pZCI6MSwiZXhwIjoxNDkxNDQ3MDA1fQ.IInyMhPZUNTlJ4alpf1C6T0N_RpIdRdcj7oROKq7kx4
+
+curl http://localhost:8000/api/comments/
+
+curl -H "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1pbmhAZ21haWwuY29tIiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhbWluIiwiZXhwIjoxNDkxNDQ3MzI0fQ.XvY9KGBE8uNR-JFlfvlWQlMr6PT9fH0jZA0RpoAok0w" http://localhost:8000/api/comments/
+
+curl -X POST -H "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1pbmhAZ21haWwuY29tIiwidXNlcl9pZCI6MSwiZXhwIjoxNDkxNDUwMDQ0LCJ1c2VybmFtZSI6ImFtaW4ifQ.oPPaO5NbqIb3wokYsLEaPeZrDx5p8G_wIXE2riMiD0g" -H "Content-Type: application/json" -d '{"content":"TEst Content"}' 'http://localhost:8000/api/comments/create/?slug=post-2&type=post'
+
+"""

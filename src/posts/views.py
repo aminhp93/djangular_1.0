@@ -65,27 +65,22 @@ def post_create(request):
 	}
 	return render(request, "post_form.html", context)
 
-def post_detail(request, id=None):
-
-	instance = get_object_or_404(Post, id=id)
+def post_detail(request, slug=None):
+	
+	instance = get_object_or_404(Post, slug=slug)
+	
 	if instance.draft or instance.publish > timezone.now().date():
 		if not request.user.is_staff or not request.user.is_superuser:
 			raise Http404
 
-	content_type = ContentType.objects.get_for_model(Post)
-	obj_id = instance.id
-	comments = instance.comments#Comment.objects.filter_by_instance(instance)
-
-	# print(get_read_time(instance.content))
-	# print(get_read_time(instance.get_markdown()))
 	initial_data = {
 		"content_type": instance.get_content_type,
 		"object_id": instance.id,
 	}
 
 	form = CommentForm(request.POST or None, initial=initial_data)
+	
 	if form.is_valid():
-		print(form.cleaned_data)
 		c_type = form.cleaned_data.get("content_type")
 		content_type = ContentType.objects.get(model=c_type)
 		obj_id = form.cleaned_data.get("object_id")
@@ -111,6 +106,7 @@ def post_detail(request, id=None):
 			)
 		return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
 
+	comments = instance.comments#Comment.objects.filter_by_instance(instance)
 	context = {
 		"instance": instance,
 		"comments": comments,
