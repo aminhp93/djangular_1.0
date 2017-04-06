@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+        <div class="page-header">
+            <h1>{{ post.title }}<small>{{ post.description }}</small></h1>
+        </div>
+        <h3>Comments</h3>
+        <div class="row">
+            <div class="col-sm-6">
+                <input class="form-control" type="text" ng-model="query" placeholder="Filter comment">
+            </div>
+        </div>
+        <ul>
+            <li ng-repeat='i in post.comments | filter: query'>
+                {{ i.text }}
+                <!-- <a href="#" ng-click="deleteComment(i)">Delete</a> -->
+                <a href="#" class="btn btn-sm btn-danger" confirm-click="Do you want to delete?" confirmed-click="deleteComment(i)">Confirm Delete</a>
+            </li>
+        </ul>
+        <p style="color:red" ng-if="reply.text">Reply: {{ reply.text }}</p>
+        <form ng-submit="addReply()">
+            <input type="hidden" ng-model="reply.id" value="5">
+            <div class="row">
+                <div class="col-sm-6">
+                    <textarea class="form-control" ng-model="reply.text" name="" id="" cols="30" rows="10"></textarea>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-primary">
+        </form>
+    </div>
+</div>
