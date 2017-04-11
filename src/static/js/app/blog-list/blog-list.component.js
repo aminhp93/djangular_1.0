@@ -2,7 +2,7 @@
 
 angular.module('blogList').
 component("blogList", {
-    templateUrl: "/templates/blog-list.html",
+    templateUrl: "/api/templates/blog-list.html",
     controller: function($scope, $routeParams, Post, $rootScope, $location, $timeout) {
         console.log($location.search())
         var q = $location.search().q

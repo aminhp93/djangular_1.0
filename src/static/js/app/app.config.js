@@ -6,7 +6,7 @@ angular.module('app').config(function($routeProvider, $locationProvider) {
     		template: "<blog-list></blog-list"
     	})
     	.when('/about', {
-    		templateUrl: "templates/about.html"
+    		templateUrl: "/api/templates/about.html"
     	})
         .when('/blog', {
             // template: "<blog-list></blog-list>"

@@ -2,7 +2,7 @@
 
 angular.module('blogDetail').
 component("blogDetail", {
-    templateUrl: "/templates/blog-detail.html",
+    templateUrl: "/api/templates/blog-detail.html",
     controller: function($scope, $routeParams, $location, $http, Post) {
         console.log(Post.query())
         console.log(Post.get())
