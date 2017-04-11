@@ -1,6 +1,8 @@
 'use strict';
 
-angular.module('app').config(function($routeProvider, $locationProvider) {
+angular.module('app').config(function($resourceProvider, $routeProvider, $locationProvider) {
+    $resourceProvider.defaults.stripTrailingSlashes = false;
+
     $routeProvider
     	.when('/', {
     		template: "<blog-list></blog-list"

@@ -1,4 +1,4 @@
-<div>
+    <div>
     <h1>{{ title }}</h1>
     <button ng-click='someClickTest()'>Click me!</button>
 </div>
@@ -36,7 +36,8 @@
         <div class="caption">
             <h3>{{ i.title }}</h3>
             <p>{{ i.title }} {{ i.description }}</p>
-            <p> <a href="/blog/{{i.id}}" ng-click="goToItem(i)" confirm-click="are you sure" confirmed-click="/blog/{{i.id}}" />{{ i.title }}</a><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+            <h1>{{ i }}</h1>
+            <p> <a href="/blog/{{i.slug}}" ng-click="goToItem(i)" confirm-click="are you sure" confirmed-click="/blog/{{i.slug}}" />{{ i.title }}</a><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
         </div>
     </div>
 </div>
