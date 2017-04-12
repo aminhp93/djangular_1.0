@@ -11,5 +11,6 @@ angular.module('app', [
 	'blogDetail',
 	'blogList',
 	'confirmClick',
+	'loginDetail',
 	'tryNav',
 	]);

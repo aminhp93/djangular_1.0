@@ -14,6 +14,9 @@ angular.module('app').config(function($resourceProvider, $routeProvider, $locati
             // template: "<blog-list></blog-list>"
             redirectTo: '/'
         })
+        .when('/login', {
+            template: "<login-detail></login-detail>"
+        })
         .when('/blog/:slug/', {
         	template: "<blog-detail></blog-detail>"
         })
