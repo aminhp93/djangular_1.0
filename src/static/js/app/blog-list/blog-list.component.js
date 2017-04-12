@@ -3,11 +3,13 @@
 angular.module('blogList').
 component("blogList", {
     templateUrl: "/api/templates/blog-list.html",
-    controller: function($scope, $routeParams, Post, $rootScope, $location, $timeout) {
-        console.log($location.search())
+    controller: function($cookies, $scope, $routeParams, Post, $rootScope, $location, $timeout) {
+        console.log($location.search());
+        console.log($cookies.get("username"));
+        console.log($cookies.get("token"));
         var q = $location.search().q
 
-        if (q){
+        if (q) {
             $scope.query = q;
             $scope.searchQuery = true;
         }
@@ -32,15 +34,15 @@ component("blogList", {
         // ]
         $scope.order = "title"
 
-        Post.query(function(data){
+        Post.query(function(data) {
             setupCol(data, 4)
-            
-            }, function(error){
+
+        }, function(error) {
 
         });
 
-        $scope.changeCol = function(){
-            if ($scope.numCols == 2){
+        $scope.changeCol = function() {
+            if ($scope.numCols == 2) {
                 $scope.numCols = 4
             } else {
                 $scope.numCols = 2
@@ -48,22 +50,22 @@ component("blogList", {
             setupCol($scope.items, $scope.numCols)
         }
 
-        function setupCol(data, number){
-            if (angular.isNumber(number)){
+        function setupCol(data, number) {
+            if (angular.isNumber(number)) {
                 $scope.numCols = number
             } else {
                 $scope.numCols = 4
             }
-            $scope.cssClass = "col-sm-" + (12/$scope.numCols)
+            $scope.cssClass = "col-sm-" + (12 / $scope.numCols)
             $scope.items = data
             $scope.colItems = chunkArrayInGroups(data, $scope.numCols)
         }
 
-        function chunkArrayInGroups(array, unit){
+        function chunkArrayInGroups(array, unit) {
             var results = [];
-            length = Math.ceil(array.length/unit);
-            for (var i = 0; i < length; i++){
-                results.push(array.slice(i*unit, (i + 1) * unit));
+            length = Math.ceil(array.length / unit);
+            for (var i = 0; i < length; i++) {
+                results.push(array.slice(i * unit, (i + 1) * unit));
             }
             return results;
         }
@@ -77,9 +79,9 @@ component("blogList", {
         //     $scope.title = "some Click " + $scope.click + " times"
         // }
 
-        $scope.goToItem = function(post){
+        $scope.goToItem = function(post) {
             console.log("Some itmes");
-            $timeout(function(){
+            $timeout(function() {
                 console.log("success")
                 $location.path("/blog/" + post.id)
             }, 0);
