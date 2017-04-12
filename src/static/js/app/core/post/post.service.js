@@ -2,7 +2,7 @@
 
 angular.module('post').factory("Post", function($resource){
 	// var url = "/static/json/posts.json"
-	var url = "/api/posts/:slug"
+	var url = "/api/posts/:slug/"
 	return $resource(url, {}, {
 		query: {
 			method: "GET",

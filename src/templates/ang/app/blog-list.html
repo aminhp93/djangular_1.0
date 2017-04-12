@@ -32,11 +32,11 @@
 </ul> -->
 <div class="col-sm-6 col-sm-offset-3" dir-paginate="i in items | orderBy: order | filter: query | itemsPerPage:5 as postItems" pagination-id="sub-content">
     <div class="thumbnail">
-        <img ng-src="{{ i.images }}" alt="...">
+        <img ng-src="{{ i.image }}" alt="...">
         <div class="caption">
             <h3>{{ i.title }}</h3>
             <p>{{ i.title }} {{ i.description }}</p>
-            <h1>{{ i }}</h1>
+            
             <p> <a href="/blog/{{i.slug}}" ng-click="goToItem(i)" confirm-click="are you sure" confirmed-click="/blog/{{i.slug}}" />{{ i.title }}</a><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
         </div>
     </div>
