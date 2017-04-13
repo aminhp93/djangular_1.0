@@ -173,6 +173,6 @@ curl http://localhost:8000/api/comments/
 
 curl -H "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1pbmhAZ21haWwuY29tIiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhbWluIiwiZXhwIjoxNDkxNDQ3MzI0fQ.XvY9KGBE8uNR-JFlfvlWQlMr6PT9fH0jZA0RpoAok0w" http://localhost:8000/api/comments/
 
-curl -X POST -H "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1pbmhAZ21haWwuY29tIiwidXNlcl9pZCI6MSwiZXhwIjoxNDkxNDUwMDQ0LCJ1c2VybmFtZSI6ImFtaW4ifQ.oPPaO5NbqIb3wokYsLEaPeZrDx5p8G_wIXE2riMiD0g" -H "Content-Type: application/json" -d '{"content":"TEst Content"}' 'http://localhost:8000/api/comments/create/?slug=post-2&type=post'
+curl -X POST -H "Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFtaW4iLCJlbWFpbCI6Im1pbmhAZ21haWwuY29tIiwiZXhwIjoxNDkyMDEzMzE4fQ.533zPKfLhQmu8pmWSGZxwwvzz9LlBcAmzhy2LBiavvk" -H "Content-Type: application/json" -d '{"content":"TEst Content2"}' 'http://localhost:8000/api/comments/create/?slug=post-2&type=post'
 
 """

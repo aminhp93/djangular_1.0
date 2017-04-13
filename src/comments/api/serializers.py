@@ -54,10 +54,14 @@ def create_comment_serializer(model_type='post', slug=None, parent_id=None, user
 			print("line 54")
 			content = validated_data.get("content")
 			print(content, "Line 56")
-			if user:
+			if user and user.is_anonymous() == False:
+				
 				main_user = user
+				print("line 59", main_user)
 			else:
 				main_user = User.objects.all().first()
+				print("line 62", main_user)
+			print(main_user)
 			model_type = self.model_type
 			slug = self.slug
 			parent_obj = self.parent_obj
@@ -72,6 +76,25 @@ def create_comment_serializer(model_type='post', slug=None, parent_id=None, user
 			return comment
 
 	return CommentCreateSerializer
+
+class CommentSerializer(ModelSerializer):
+    reply_count = SerializerMethodField()
+    class Meta:
+        model = Comment
+        fields = [
+            'id',
+            'content_type',
+            'object_id',
+            'parent',
+            'content',
+            'reply_count',
+            'timestamp',
+        ]
+    
+    def get_reply_count(self, obj):
+        if obj.is_parent:
+            return obj.children().count()
+        return 0
 
 class CommentListSerializer(ModelSerializer):
 	url = HyperlinkedIdentityField(

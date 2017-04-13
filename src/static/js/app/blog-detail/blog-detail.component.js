@@ -3,12 +3,16 @@
 angular.module('blogDetail').
 component("blogDetail", {
     templateUrl: "/api/templates/blog-detail.html",
-    controller: function($scope, $routeParams, $location, $http, Post) {
+    controller: function($cookies, $scope, $routeParams, $location, $http, Post) {
         console.log(Post.query())
         console.log(Post.get())
+        var slug = $routeParams.slug
 
-        Post.get({"slug": $routeParams.slug}, function(data){
+        Post.get({ "slug": $routeParams.slug }, function(data) {
             $scope.post = data
+            $scope.comments = data.comments
+            console.log(data);
+            console.log($scope.comments, "scope comments")
         })
 
         // Post.query(function(data) {
@@ -21,21 +25,53 @@ component("blogDetail", {
         //     })
         // })
 
-        $scope.deleteComment = function(comment){
+        $scope.deleteComment = function(comment) {
             $scope.$apply($scope.post.comments.splice(comment, 1))
         }
 
+        // curl -X POST -H "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1pbmhAZ21haWwuY29tIiwidXNlcl9pZCI6MSwiZXhwIjoxNDkxNDUwMDQ0LCJ1c2VybmFtZSI6ImFtaW4ifQ.oPPaO5NbqIb3wokYsLEaPeZrDx5p8G_wIXE2riMiD0g" -H "Content-Type: application/json" -d '{"content":"TEst Content"}' 'http://localhost:8000/api/comments/create/?slug=post-2&type=post'
+
+
         $scope.addReply = function() {
             console.log($scope.reply)
-            $scope.post.comments.push($scope.reply)
+            var token = $cookies.get("token")
+            if (token) {
+                var req = {
+                    method: "POST",
+                    url: "http://localhost:8000/api/comments/create/?slug=" + slug + "&type=post",
+                    data: {
+                        content: $scope.reply.content
+                    },
+                    headers: {
+                        authorization: "JWT" + token
+                    }
+                }
 
-            resetReply()
+                console.log($scope.reply.content, "|||||||", slug, "======", token)
+                var requestAction = $http(req)
+                console.log(requestAction, "WOOOOO");
+                console.log($scope.comments);
+                requestAction.success(function(r_data, r_status, r_headers, r_config){
+                    $scope.comments.push($scope.reply);
+                    resetReply();
+                })
+
+                requestAction.error(function(e_data, e_status, e_headees, e_config){
+                    console.log(e_data);
+                })
+
+                // $scope.comments.push($scope.reply)
+                // resetReply()
+            } else {
+                console.log("No token")
+            }
+
         }
 
         function resetReply() {
             $scope.reply = {
                 "id": $scope.post.comments.length + 1,
-                "text": ""
+                "content": ""
             }
 
         }

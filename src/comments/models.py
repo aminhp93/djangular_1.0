@@ -26,6 +26,7 @@ class CommentManager(models.Manager):
 			if obj_qs.exists() and obj_qs.count() == 1:
 				instance = self.model()
 				instance.content = content
+				print(user, "test user comment")
 				instance.user = user
 				instance.content_type = model_qs.first()
 				instance.object_id = obj_qs.first().id
