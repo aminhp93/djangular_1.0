@@ -26,9 +26,10 @@ from rest_framework.permissions import (
 from comments.models import Comment
 
 from .serializers import (
+	CommentCreateSerializer,
 	CommentListSerializer,
 	CommentDetailSerializer,
-	create_comment_serializer,
+	# create_comment_serializer,
 	)
 
 from posts.api.pagination import PostLimitOffsetPagination
@@ -56,19 +57,24 @@ class CommentListAPIView(ListAPIView):
 
 class CommentCreateAPIView(CreateAPIView):
 	queryset = Comment.objects.all()
-	# serializer_class = PostCreateUpdateSerializer
+	serializer_class = CommentCreateSerializer
 	# permission_classes = [IsAuthenticated, IsAdminUser]
 
-	def get_serializer_class(self):
-		model_type = self.request.GET.get("type")
-		slug = self.request.GET.get("slug")
-		parent_id = self.request.GET.get("parent_id", None)
-		print(model_type, slug, "+============")
-		return create_comment_serializer(
-			model_type=model_type, 
-			slug=slug, 
-			parent_id=parent_id,
-			user=self.request.user)
+	def get_serializer_context(self):
+		context = super().get_serializer_context()
+		context["user"] = self.request.user
+		return context
+
+	# def get_serializer_class(self):
+	# 	model_type = self.request.GET.get("type")
+	# 	slug = self.request.GET.get("slug")
+	# 	parent_id = self.request.GET.get("parent_id", None)
+	# 	print(model_type, slug, "+============")
+	# 	return create_comment_serializer(
+	# 		model_type=model_type, 
+	# 		slug=slug, 
+	# 		parent_id=parent_id,
+	# 		user=self.request.user)
 
 	# def perform_create(self, serializer):
 		# serializer.save(user=self.request.user)
