@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('post').factory("Post", function($resource){
+angular.module('core.post').factory("Post", function($resource){
 	// var url = "/static/json/posts.json"
 	var url = "/api/posts/:slug/"
 	return $resource(url, {}, {

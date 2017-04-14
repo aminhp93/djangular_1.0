@@ -3,14 +3,17 @@
 angular.module('blogDetail').
 component("blogDetail", {
     templateUrl: "/api/templates/blog-detail.html",
-    controller: function($cookies, $scope, $routeParams, $location, $http, Post) {
+    controller: function(Comment, $cookies, $scope, $routeParams, $location, $http, Post) {
         console.log(Post.query())
         console.log(Post.get())
         var slug = $routeParams.slug
 
         Post.get({ "slug": $routeParams.slug }, function(data) {
             $scope.post = data
-            $scope.comments = data.comments
+            // $scope.comments = data.comments
+            Comment.query({"slug": slug, "type": "post"}, function(data){
+                $scope.comments = data
+            })
             console.log(data);
             console.log($scope.comments, "scope comments")
         })
