@@ -151,12 +151,12 @@ REST_FRAMEWORK = {
     # ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
-        # 'rest_framework.authentication.BasicAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
 
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        # 'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAuthenticated',
         # 'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     )
 }
@@ -173,6 +173,6 @@ curl http://localhost:8000/api/comments/
 
 curl -H "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1pbmhAZ21haWwuY29tIiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhbWluIiwiZXhwIjoxNDkxNDQ3MzI0fQ.XvY9KGBE8uNR-JFlfvlWQlMr6PT9fH0jZA0RpoAok0w" http://localhost:8000/api/comments/
 
-curl -X POST -H "Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFtaW4iLCJlbWFpbCI6Im1pbmhAZ21haWwuY29tIiwiZXhwIjoxNDkyMDEzMzE4fQ.533zPKfLhQmu8pmWSGZxwwvzz9LlBcAmzhy2LBiavvk" -H "Content-Type: application/json" -d '{"content":"TEst Content2"}' 'http://localhost:8000/api/comments/create/?slug=post-2&type=post'
+curl -X POST -H "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFtaW4iLCJlbWFpbCI6Im1pbmhAZ21haWwuY29tIiwiZXhwIjoxNDkyMTkxMDA5fQ.SSvFrP_AOh7ZDsSodTtJITWmn66GuzALjrID3-9oqDM" -H "Content-Type: application/json" -d '{"content":"TEst Content4"}' 'http://localhost:8000/api/comments/create/?slug=post-2&type=post'
 
 """

@@ -58,7 +58,7 @@ class CommentCreateSerializer(ModelSerializer):
 		obj_qs = SomeModel.objects.filter(slug=slug)
 		if not obj_qs.exists() or obj_qs.count() != 1:
 			raise ValidationError("This is not a slug for this content")
-
+		print("WOOOOOOOO")
 		parent_id = data.get("parent_id")
 		if parent_id:
 			parent_qs = Comment.objects.filter(id=parent_id)
@@ -86,6 +86,7 @@ class CommentCreateSerializer(ModelSerializer):
 			parent_obj = Comment.objects.filter(id=parent_id).first()
 
 		user = self.context["user"]
+		print(user)
 		
 		comment = Comment.objects.create_by_model_type(
 			model_type,

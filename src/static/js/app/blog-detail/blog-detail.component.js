@@ -50,7 +50,7 @@ component("blogDetail", {
                     }
                 }
 
-                console.log($scope.reply.content, "|||||||", slug, "======", token)
+                console.log($scope.reply.content, "|||||||", slug, "======", token, req)
                 var requestAction = $http(req)
                 console.log(requestAction, "WOOOOO");
                 console.log($scope.comments);
